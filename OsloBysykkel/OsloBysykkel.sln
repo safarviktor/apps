@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsloBysykkel", "OsloBysykkel\OsloBysykkel.csproj", "{13FDA72F-4B41-468A-9A42-57FD5967C527}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsloBysykkel.DataAccess", "OsloBysykkel.DataAccess\OsloBysykkel.DataAccess.csproj", "{D97211E6-1456-47F0-AE95-AFDB4006A553}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{13FDA72F-4B41-468A-9A42-57FD5967C527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13FDA72F-4B41-468A-9A42-57FD5967C527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13FDA72F-4B41-468A-9A42-57FD5967C527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97211E6-1456-47F0-AE95-AFDB4006A553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97211E6-1456-47F0-AE95-AFDB4006A553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97211E6-1456-47F0-AE95-AFDB4006A553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97211E6-1456-47F0-AE95-AFDB4006A553}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
