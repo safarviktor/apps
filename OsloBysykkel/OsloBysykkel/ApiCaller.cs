@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using OsloBysykkel.Models;
 using Newtonsoft.Json;
 
 namespace OsloBysykkel

@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D97211E6-1456-47F0-AE95-AFDB4006A553}</ProjectGuid>
+    <ProjectGuid>{26B704AF-FA04-4DF9-A707-FA106AA43206}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OsloBysykkel.DataAccess</RootNamespace>
-    <AssemblyName>OsloBysykkel.DataAccess</AssemblyName>
+    <RootNamespace>OsloBysykkel.Models</RootNamespace>
+    <AssemblyName>OsloBysykkel.Models</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,20 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Availability.cs" />
+    <Compile Include="AvailabilityResult.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StationBoundariesRepository.cs" />
-    <Compile Include="StationAvailabilitiesRepository.cs" />
-    <Compile Include="StationsRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OsloBysykkel.Models\OsloBysykkel.Models.csproj">
-      <Project>{26b704af-fa04-4df9-a707-fa106aa43206}</Project>
-      <Name>OsloBysykkel.Models</Name>
-    </ProjectReference>
+    <Compile Include="Station.cs" />
+    <Compile Include="StationAvailability.cs" />
+    <Compile Include="StationDescriptionsResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
