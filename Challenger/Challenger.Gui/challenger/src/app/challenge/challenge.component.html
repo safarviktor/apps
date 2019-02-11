@@ -1,0 +1,70 @@
+<h3>
+  {{ thisChallenge.Name }}
+</h3>
+
+<div class="row" >
+    <div class="col-md-2">
+        Current Total
+    </div>      
+    <div class="col-md-2">
+        {{ thisChallenge.CurrentTotal }}
+    </div>      
+</div>
+
+<div class="row" >
+    <div class="col-md-2">
+        Last Entry
+    </div>      
+    <div class="col-md-2">
+        {{ thisChallenge.LastEntry | date : 'yyyy-MM-dd HH:mm' }}
+    </div>      
+</div>
+
+<div class="row" >
+    <div class="col-md-2">
+        Last Entry Count
+    </div>      
+    <div class="col-md-2">
+        {{ thisChallenge.LastEntryCount }}
+    </div>      
+</div>
+
+<div class="row" >
+    <div class="col-md-2">
+        Today Count
+    </div>        
+    <div class="col-md-2">
+        {{ thisChallenge.TodayCount }}
+    </div>     
+</div>
+
+<br />
+
+<h4>
+Sets:
+</h4>
+
+<div class="row" >
+    <div class="col-md-2">
+        Date Time Created
+    </div>        
+    <div class="col-md-2">
+        Date
+    </div>     
+    <div class="col-md-2">
+        Count
+    </div>     
+</div>
+
+<div class="row" *ngFor='let s of thisChallenge.Sets'>
+    <div class="col-md-2">
+        {{ s.DateTimeCreated | date : 'yyyy-MM-dd HH:mm' }}
+    </div>      
+    <div class="col-md-2">
+        {{ s.Date | date : 'yyyy-MM-dd' }}
+    </div>      
+    <div class="col-md-2">
+        {{ s.Count }}
+    </div>       
+  </div>
+  

@@ -1,0 +1,28 @@
+<p>
+  My Challenges
+</p>
+
+<div class="row" *ngFor='let c of myChallenges'>
+  <div class="col-md-2">
+      <a [routerLink]="['/challenge', c.Id]" >{{ c.Name }}</a>
+  </div>      
+  <div class="col-md-2">
+      {{ c.CurrentTotal }}
+  </div>      
+  <div class="col-md-2">
+      {{ c.LastEntry | date : 'yyyy-MM-dd HH:mm' }}
+  </div>      
+  <div class="col-md-2">
+      {{ c.LastEntryCount }}
+  </div>      
+  <div class="col-md-2">
+      {{ c.TodayCount }}
+  </div>     
+</div>
+
+
+<br />
+<br />
+<button (click)="addChallenge()">Add challenge</button>
+
+

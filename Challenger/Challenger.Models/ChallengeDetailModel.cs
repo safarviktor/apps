@@ -1,0 +1,9 @@
+﻿using System.Collections.Generic;
+
+namespace Challenger.Models
+{
+    public class ChallengeDetailModel : ChallengeOverviewModel
+    {
+        public List<ChallengeSetModel> Sets { get; set; }
+    }
+}
