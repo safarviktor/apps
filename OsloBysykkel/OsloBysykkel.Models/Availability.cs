@@ -11,5 +11,7 @@ namespace OsloBysykkel.Models
         public int Bikes { get; set; }
         public int Locks { get; set; }
         public bool Overflow_Capacity { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public decimal RefreshRate { get; set; }
     }
 }

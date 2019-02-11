@@ -11,48 +11,69 @@ namespace OsloBysykkel.DataAccess
 {
     public class StationsRepository : BaseRepository
     {
+        public async Task<bool> StationExists(int stationId)
+        {
+            return await WithDatabaseConnection(async c =>
+            {
+                var sql = $@"
+                select 1 from OsloBysykkel.Stations
+                where Id = {stationId}";
+
+                var exists = await c.QueryAsync<int>(sql);
+                return exists.Any();
+            });
+        }
+
         public async Task<int> AddStation(Station station)
         {
             return await WithDatabaseConnection(async c =>
             {
-                await PrepareBoundaries(c, station);
-                return await InsertStation(c, station);
+                await InsertStation(c, station);
+                await InsertBoundaries(c, station);
+                return station.Id;
             });
         }
 
-        private async Task PrepareBoundaries(IDbConnection dbConnection, Station station)
+        private async Task InsertBoundaries(IDbConnection dbConnection, Station station)
         {
-            var sql = @"
-                CREATE TABLE ##PointsToInsert
-                (
-                    Lat DECIMAL(18,15),
-                    Long DECIMAL(18,15)
-                )
-                INSERT INTO ##PointsToInsert (Lat, Long)
-                ";
-
-            var endOfLine = " UNION ALL" + Environment.NewLine;
-
             foreach (var bound in station.Bounds)
             {
-                sql += $"SELECT {bound.Latitude}, {bound.Longitude}{endOfLine}";
-            }
+                var sql = $@"
+                INSERT INTO OsloBysykkel.Points
+                (Latitude, Longitude)
+                SELECT {bound.Latitude}, {bound.Longitude}
 
-            sql = sql.Substring(0, sql.Length - endOfLine.Length);
+                DECLARE @pointId INT = SCOPE_IDENTITY()
 
-            await dbConnection.ExecuteAsync(sql);
+                INSERT INTO OsloBysykkel.StationBoundaries
+                (StationId, PointId)
+                SELECT {station.Id}, @pointId
+                ";
+
+                await dbConnection.ExecuteAsync(sql);
+            }            
         }
 
-        private Task<int> InsertStation(IDbConnection dbConnection, Station station)
+        private async Task InsertStation(IDbConnection dbConnection, Station station)
         {
             var sql = $@"
+                INSERT INTO OsloBysykkel.Points
+                (Latitude, Longitude)
+                SELECT {station.Center.Latitude}, {station.Center.Longitude}
+                
+                DECLARE @centerPoint INT = SCOPE_IDENTITY()
+    
                 INSERT INTO OsloBysykkel.Stations
-                (Id, Title, Subtitle, NumberOfLocks, CenterLatitude, CenterLongitude)
+                (Id, Title, Subtitle, NumberOfLocks, CenterPoint)
                 SELECT 
                     {station.Id}, 
                     {StringOrNull(station.Title)}, 
                     {StringOrNull(station.Subtitle)}, 
-";
+                    {station.Number_Of_Locks}, 
+                    @centerPoint 
+                ";
+
+            await dbConnection.ExecuteAsync(sql);
         }
     }
 }

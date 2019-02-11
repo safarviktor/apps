@@ -1,0 +1,21 @@
+﻿@model OsloBysykkel.Web.Models.StationAvailabilityInTimeModel
+
+@{
+    ViewBag.Title = "SingleStationAvailability";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Station: @Model.Station.Title</h2>
+
+<h4>Description: @Model.Station.Subtitle</h4>
+
+<div>
+    @foreach (var availability in Model.Availabilities)
+    {
+        @availability.AsAt.ToString("yyyy-MM-dd HH:mm")
+        @Html.Raw("&nbsp;") 
+        @(availability.Bikes + "/" + availability.Locks)
+        <meter value="@availability.Bikes" min="0" max="@availability.Locks"></meter>
+        <br />
+    }
+</div>

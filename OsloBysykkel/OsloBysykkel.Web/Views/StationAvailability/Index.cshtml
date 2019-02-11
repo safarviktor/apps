@@ -1,0 +1,20 @@
+﻿@model IEnumerable<OsloBysykkel.Web.Models.StationAvailabilityInTimeModel>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Oslo Bysykkel stations</h2>
+
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Station.Title ?? $"Station {item.Station.Id}", "SingleStationAvailability", new { id = item.Station.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,3 +1,11 @@
+--CREATE SCHEMA OsloBysykkel AUTHORIZATION dbo
+
+--drop table OsloBysykkel.StationAvailabilities
+--drop table OsloBysykkel.StationBoundaries
+--drop table OsloBysykkel.Stations
+--drop table OsloBysykkel.Points
+--drop SCHEMA OsloBysykkel
+
 CREATE TABLE OsloBysykkel.Points
 (
 	Id INT NOT NULL CONSTRAINT PK_Points PRIMARY KEY CLUSTERED,
@@ -11,8 +19,8 @@ CREATE TABLE OsloBysykkel.Stations
 	Title NVARCHAR(255) NULL,
 	Subtitle NVARCHAR(500) NULL,
 	NumberOfLocks TINYINT NULL,
-	CenterLatitude DECIMAL(18,15),
-	CenterLongitude DECIMAL(18,15)
+	CenterPointId INT NOT NULL
+		CONSTRAINT FK_Stations_CenterPointId FOREIGN KEY REFERENCES OsloBysykkel.Points(Id),
 )
 
 CREATE TABLE OsloBysykkel.StationBoundaries
@@ -34,9 +42,9 @@ CREATE TABLE OsloBysykkel.StationAvailabilities
 	RefreshRate	DECIMAL(5,2) NULL
 )
 
-INSERT INTO OsloBysykkel.Stations
-(Id, Title, Subtitle, NumberOfLocks, CenterLatitude, CenterLongitude)
-SELECT 210, 'Birkelunden', 'langs Seilduksgata', 10, 59.92559918218687, 10.760778486728668
+--INSERT INTO OsloBysykkel.Stations
+--(Id, Title, Subtitle, NumberOfLocks, CenterLatitude, CenterLongitude)
+--SELECT 210, 'Birkelunden', 'langs Seilduksgata', 10, 59.92559918218687, 10.760778486728668
 
 
 --{
