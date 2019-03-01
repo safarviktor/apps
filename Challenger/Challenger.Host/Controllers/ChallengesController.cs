@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 using Challenger.DataAccess;
 using Challenger.Models;
 
 namespace Challenger.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods:"*")]
     [System.Web.Mvc.Route("/api/challenges")]
     public class ChallengesController : System.Web.Http.ApiController
     {

@@ -22,6 +22,8 @@ namespace Challenger.DataAccess
 
             Database.Instance.ChallengeOverviews.Add(model);
 
+            Database.Instance.Save();
+
             return model;
         }
 
@@ -36,11 +38,13 @@ namespace Challenger.DataAccess
                 ChallengeId = model.ChallengeId,
                 Count = model.Count,
                 DateTimeCreated = DateTime.Now,
-                Date = model.Date == new DateTime() ? DateTime.Now.Date : model.Date,
+                Date = model.Date == new DateTime() ? DateTime.Now.Date : model.Date.Date,
                 Id = nextId
             };
 
             Database.Instance.ChallengeSets.Add(newModel);
+
+            Database.Instance.Save();
 
             return newModel;
         }
@@ -62,18 +66,23 @@ namespace Challenger.DataAccess
         public IEnumerable<ChallengeOverviewModel> GetChallengeOverviews()
         {
             var today = DateTime.Today.Date;
-            return Database.Instance.ChallengeOverviews.Select(c => new ChallengeOverviewModel()
+            var challenges = Database.Instance.ChallengeOverviews.Select(c => new ChallengeOverviewModel()
             {
                 Id = c.Id,
+                UserId = c.UserId,
                 Name = c.Name,
                 CurrentTotal = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Count) ?? 0,
                 LastEntry = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.DateTimeCreated ?? null,
                 LastEntryCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Count ?? 0,
-                TodayCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date == today)?.Sum(x => x.Count) ?? 0,
+                TodayCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date.Date == today)?.Sum(x => x.Count) ?? 0,
                 Type = c.Type
-            });
-        }
+            }).ToList();
 
+            challenges.ForEach(x => x.UpdateTodayGoal());
+            
+            return challenges;
+        }
+        
         public ChallengeDetailModel GetChallengeDetails(int id)
         {
             var challenge = Database.Instance.ChallengeOverviews.FirstOrDefault(x => x.Id == id);
@@ -83,6 +92,7 @@ namespace Challenger.DataAccess
             {
                 CurrentTotal = sets.Sum(x => x.Count),
                 Id = id,
+                UserId = challenge.UserId,
                 Name = challenge.Name,
                 Type = challenge.Type,
                 Sets = sets.Select(x => new ChallengeSetModel()
@@ -96,8 +106,10 @@ namespace Challenger.DataAccess
                         .ToList(),
                 LastEntryCount = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Count ?? 0,
                 LastEntry = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.DateTimeCreated,
-                TodayCount = sets.Where(x => x.Date == DateTime.Today.Date)?.Sum(x => x.Count) ?? 0,
+                TodayCount = sets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Count) ?? 0,
             };
+
+            model.UpdateTodayGoal();
 
             return model; 
         }

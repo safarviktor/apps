@@ -3,10 +3,13 @@ import { ChallengeType } from './ChallengeType';
 export class ChallengeOverview
 {
     Id: Number;
+    UserId: Number;
     Name: string;
     CurrentTotal: number;
     LastEntry: Date;
-    LasEntryCount: number;
+    LastEntryCount: number;
     TodayCount: number;
-    Type: ChallengeType;
+    TodayGoal: number;
+    TodayTodo: number;
+    Type: ChallengeType;    
 }
