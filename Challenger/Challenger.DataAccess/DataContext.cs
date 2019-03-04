@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Challenger.Models;
 
 namespace Challenger.DataAccess
@@ -86,7 +87,13 @@ namespace Challenger.DataAccess
         public ChallengeDetailModel GetChallengeDetails(int id)
         {
             var challenge = Database.Instance.ChallengeOverviews.FirstOrDefault(x => x.Id == id);
-            var sets = Database.Instance.ChallengeSets.Where(x => x.ChallengeId == id);
+
+            if (challenge == null)
+            {
+                return null;
+            }
+
+            var sets = Database.Instance.ChallengeSets.Where(x => x.ChallengeId == id).ToList();
 
             var model = new ChallengeDetailModel()
             {
@@ -95,21 +102,26 @@ namespace Challenger.DataAccess
                 UserId = challenge.UserId,
                 Name = challenge.Name,
                 Type = challenge.Type,
-                Sets = sets.Select(x => new ChallengeSetModel()
+                SetsByDay = sets
+                        .GroupBy(x => x.Date.Date)
+                        .Select(g => new DaySets()
                         {
-                            DateTimeCreated = x.DateTimeCreated,
-                            Count = x.Count,
-                            Id = x.Id,
-                            Date = x.Date
-                        })
-                        .OrderByDescending(x => x.DateTimeCreated)
-                        .ToList(),
+                            Date = g.Key,
+                            Sets = g.Select(s => new ChallengeSetModel()
+                            {
+                                Date = s.Date,
+                                Count = s.Count,
+                                DateTimeCreated = s.DateTimeCreated,
+                                Id = s.Id,
+                                ChallengeId = id
+                            }).ToList()
+                        }).ToList(),
                 LastEntryCount = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Count ?? 0,
                 LastEntry = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.DateTimeCreated,
                 TodayCount = sets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Count) ?? 0,
             };
 
-            model.UpdateTodayGoal();
+            model.UpdateCalculatedFields();
 
             return model; 
         }

@@ -46,6 +46,7 @@
     <Compile Include="ChallengeSetModel.cs" />
     <Compile Include="ChallengeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DaySets.cs" />
     <Compile Include="TrackSetModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

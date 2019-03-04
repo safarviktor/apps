@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Challenger.Models
 {
     public class ChallengeDetailModel : ChallengeOverviewModel
     {
-        public List<ChallengeSetModel> Sets { get; set; }
+        public List<DaySets> SetsByDay { get; set; }
     }
 }

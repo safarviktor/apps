@@ -11,5 +11,7 @@ export class ChallengeOverview
     TodayCount: number;
     TodayGoal: number;
     TodayTodo: number;
+    TargetTotal: number;
+    TargetTotalTodo: number;
     Type: ChallengeType;    
 }

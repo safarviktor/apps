@@ -1,7 +1,7 @@
 import { ChallengeOverview } from './ChallengeOverview';
-import { ChallengeSet } from './ChallengeSet';
+import { DaySets } from './DaySets';
 
 export class ChallengeDetail extends ChallengeOverview
 {
-    Sets: Array<ChallengeSet> ;
+    SetsByDay: Array<DaySets> ;
 }

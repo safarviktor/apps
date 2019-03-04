@@ -14,7 +14,9 @@ namespace Challenger.Models
         public DateTime? LastEntry { get; set; }
         public int LastEntryCount { get; set; }
         public int TodayCount { get; set; }
-        public int TodayGoal{ get; set; }
-        public int TodayTodo{ get; set; }
+        public int TodayGoal { get; set; }
+        public int TodayTodo { get; set; }
+        public int TargetTotal { get; set; }
+        public int TargetTotalTodo { get; set; }
     }
 }
