@@ -123,6 +123,9 @@ namespace Challenger.DataAccess
 
             model.UpdateCalculatedFields();
 
+            model.SetsByDay.RemoveAll(x => x.Date < DateTime.Now.Date.AddDays(-7));
+            model.SetsByDay = model.SetsByDay.OrderByDescending(x => x.Date).ToList();
+
             return model; 
         }
     }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dapper;
+using OsloBysykkel.Models;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using OsloBysykkel.Models;
 
 namespace OsloBysykkel.DataAccess
 {
@@ -16,7 +13,7 @@ namespace OsloBysykkel.DataAccess
             return await WithDatabaseConnection(async c =>
             {
                 var sql = $@"
-                select 1 from OsloBysykkel.Stations
+                select 1 from ob.Stations
                 where Id = {stationId}";
 
                 var exists = await c.QueryAsync<int>(sql);
@@ -39,13 +36,13 @@ namespace OsloBysykkel.DataAccess
             foreach (var bound in station.Bounds)
             {
                 var sql = $@"
-                INSERT INTO OsloBysykkel.Points
+                INSERT INTO ob.Points
                 (Latitude, Longitude)
                 SELECT {bound.Latitude}, {bound.Longitude}
 
                 DECLARE @pointId INT = SCOPE_IDENTITY()
 
-                INSERT INTO OsloBysykkel.StationBoundaries
+                INSERT INTO ob.StationBoundaries
                 (StationId, PointId)
                 SELECT {station.Id}, @pointId
                 ";
@@ -56,14 +53,24 @@ namespace OsloBysykkel.DataAccess
 
         private async Task InsertStation(IDbConnection dbConnection, Station station)
         {
-            var sql = $@"
-                INSERT INTO OsloBysykkel.Points
+            var sql = @"DECLARE @centerPoint INT
+                ";
+
+            if (station.Center != null)
+            {
+                sql += $@"
+                INSERT INTO ob.Points
                 (Latitude, Longitude)
                 SELECT {station.Center.Latitude}, {station.Center.Longitude}
                 
-                DECLARE @centerPoint INT = SCOPE_IDENTITY()
-    
-                INSERT INTO OsloBysykkel.Stations
+                SET @centerPoint = SCOPE_IDENTITY()
+                ";
+            }
+            
+
+            sql += $@"
+                    
+                INSERT INTO ob.Stations
                 (Id, Title, Subtitle, NumberOfLocks, CenterPoint)
                 SELECT 
                     {station.Id}, 

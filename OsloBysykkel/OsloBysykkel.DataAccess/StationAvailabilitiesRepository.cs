@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using OsloBysykkel.Models;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace OsloBysykkel.DataAccess
 {
@@ -24,7 +20,7 @@ namespace OsloBysykkel.DataAccess
                 parameters.Add("@RefreshRate", availability.Availability.RefreshRate, DbType.Decimal);
 
                 var sql = $@"                
-                INSERT INTO OsloBysykkel.StationAvailabilities
+                INSERT INTO ob.StationAvailabilities
                 (StationId, LogDateTime, Bikes, Locks, UpdatedAt, RefreshRate)
                 SELECT @StationId, @LogDateTime, @Bikes, @Locks, @UpdatedAt, @RefreshRate
 

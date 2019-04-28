@@ -18,18 +18,18 @@ namespace OsloBysykkel
             return JsonConvert.DeserializeObject<AvailabilityResult>(stringContent);
         }
 
-        public async Task<Station> GetFullStation(int stationId)
-        {
-            if (!_cachedStations.ContainsKey(stationId))
-            {
-                // get station from API
-                _cachedStations.Add(stationId, );
-            }
+        //public async Task<Station> GetFullStation(int stationId)
+        //{
+        //    if (!_cachedStations.ContainsKey(stationId))
+        //    {
+        //        // get station from API
+        //        _cachedStations.Add(stationId, );
+        //    }
 
-            return _cachedStations.ContainsKey(stationId) 
-                ? _cachedStations[stationId]
-                : null;
-        }
+        //    return _cachedStations.ContainsKey(stationId) 
+        //        ? _cachedStations[stationId]
+        //        : null;
+        //}
 
         public async Task<StationDescriptionsResult> GetStationsDescriptions()
         {
