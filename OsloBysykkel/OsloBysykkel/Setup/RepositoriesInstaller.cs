@@ -9,9 +9,10 @@ namespace OsloBysykkel.Setup
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(AllTypes.FromAssemblyNamed("OsloBysykkel.DataAccess")
+            container.Register(Classes.FromAssemblyNamed("OsloBysykkel.DataAccess")
                 .Where(type => type.IsAssignableFrom(typeof(BaseRepository)) && !type.IsAbstract)
-                .WithService.DefaultInterfaces()
+                .WithService
+                .DefaultInterfaces()
                 .LifestyleTransient());
         }
     }
