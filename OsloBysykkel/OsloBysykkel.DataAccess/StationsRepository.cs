@@ -33,18 +33,29 @@ namespace OsloBysykkel.DataAccess
 
         private async Task InsertBoundaries(IDbConnection dbConnection, Station station)
         {
+            if (station.Bounds == null)
+            {
+                return;
+            }
+
             foreach (var bound in station.Bounds)
             {
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@StationId", station.Id, DbType.Int32);
+                parameters.Add("@Latitude", station.Center.Latitude, DbType.Decimal);
+                parameters.Add("@Longitude", station.Center.Longitude, DbType.Decimal);
+
                 var sql = $@"
                 INSERT INTO ob.Points
                 (Latitude, Longitude)
-                SELECT {bound.Latitude}, {bound.Longitude}
+                SELECT @Latitude, @Longitude
 
                 DECLARE @pointId INT = SCOPE_IDENTITY()
 
                 INSERT INTO ob.StationBoundaries
                 (StationId, PointId)
-                SELECT {station.Id}, @pointId
+                SELECT @StationId, @pointId
                 ";
 
                 await dbConnection.ExecuteAsync(sql);
@@ -53,34 +64,44 @@ namespace OsloBysykkel.DataAccess
 
         private async Task InsertStation(IDbConnection dbConnection, Station station)
         {
+
+            var parameters = new DynamicParameters();
+
             var sql = @"DECLARE @centerPoint INT
                 ";
 
             if (station.Center != null)
             {
+                parameters.Add("@Latitude", station.Center.Latitude, DbType.Decimal);
+                parameters.Add("@Longitude", station.Center.Longitude, DbType.Decimal);
+
                 sql += $@"
                 INSERT INTO ob.Points
                 (Latitude, Longitude)
-                SELECT {station.Center.Latitude}, {station.Center.Longitude}
+                SELECT @Latitude, @Longitude
                 
                 SET @centerPoint = SCOPE_IDENTITY()
                 ";
             }
             
+            parameters.Add("@StationId", station.Id, DbType.Int32);
+            parameters.Add("@Title", StringOrNull(station.Title), DbType.String);
+            parameters.Add("@Subtitle", StringOrNull(station.Subtitle), DbType.String);
+            parameters.Add("@NUmberOfLocks", station.Number_Of_Locks, DbType.Int32);
 
             sql += $@"
                     
                 INSERT INTO ob.Stations
-                (Id, Title, Subtitle, NumberOfLocks, CenterPoint)
+                (Id, Title, Subtitle, NumberOfLocks, CenterPointId)
                 SELECT 
-                    {station.Id}, 
-                    {StringOrNull(station.Title)}, 
-                    {StringOrNull(station.Subtitle)}, 
-                    {station.Number_Of_Locks}, 
+                    @StationId, 
+                    @Title, 
+                    @Subtitle, 
+                    @NUmberOfLocks, 
                     @centerPoint 
                 ";
 
-            await dbConnection.ExecuteAsync(sql);
+            await dbConnection.ExecuteAsync(sql, parameters);
         }
     }
 }

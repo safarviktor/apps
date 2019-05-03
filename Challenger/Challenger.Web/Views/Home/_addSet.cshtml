@@ -1,0 +1,36 @@
+﻿@model Challenger.Web.Models.AddSetViewModel
+
+
+@using (@Html.BeginForm("AddSet", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="col-xs-4">
+                Repetitions:
+            </div>
+            <div class="col-xs-4">
+                @Html.EditorFor(m => m.Count)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Date:
+            </div>
+            <div class="col-xs-4">
+                @*@Html.EditorFor(m => m.Date)*@
+                @Html.TextBoxFor(m => m.Date, new { @Value = Model.Date.ToString("yyyy-MM-dd"), @class="datepicker" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+            @Html.HiddenFor(m => m.ChallengeId)
+
+        </div>
+}

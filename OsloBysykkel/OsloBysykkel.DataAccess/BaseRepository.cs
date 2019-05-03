@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OsloBysykkel.DataAccess
@@ -13,7 +12,7 @@ namespace OsloBysykkel.DataAccess
     {
         private static string _connectionString = null;
         public static string ConnectionString => _connectionString ??
-                                                 (_connectionString = ConfigurationManager.ConnectionStrings["SQL1"].ConnectionString);
+                                                 (_connectionString = ConfigurationManager.ConnectionStrings["ObDatabase"].ConnectionString);
 
         protected async Task<T> WithDatabaseConnection<T>(Func<IDbConnection, Task<T>> getData)
         {
@@ -23,7 +22,7 @@ namespace OsloBysykkel.DataAccess
                 return await getData(connection);
             }
         }
-
+        
         protected static string StringOrNull(string s)
         {
             return s == null

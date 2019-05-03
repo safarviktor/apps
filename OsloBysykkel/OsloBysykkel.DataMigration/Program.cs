@@ -1,4 +1,6 @@
-﻿namespace OsloBysykkel.DataMigration
+﻿using System;
+
+namespace OsloBysykkel.DataMigration
 {
     class Program
     {
@@ -6,6 +8,8 @@
         {
             var worker = new MigrationWorker();
             worker.Execute().GetAwaiter().GetResult();
+            Console.WriteLine("Done!");
+            Console.ReadKey();
         }
     }
 }

@@ -43,6 +43,12 @@ namespace OsloBysykkel.DataAccess
         private static StationAvailabilityAtTime GetLine(string line)
         {
             var splits = line.Split(';');
+            
+            var inService = false;
+            bool.TryParse(splits[4], out inService);
+
+            var numberOfLocks = 0;
+            int.TryParse(splits[5], out numberOfLocks);
 
             try
             {
@@ -61,8 +67,8 @@ namespace OsloBysykkel.DataAccess
                         Id = Convert.ToInt32(splits[1]),
                         Title = splits[2],
                         Subtitle = splits[3],
-                        In_Service = Convert.ToBoolean(splits[4]),
-                        Number_Of_Locks = Convert.ToInt32(splits[5]),
+                        In_Service = inService,
+                        Number_Of_Locks = numberOfLocks,
                     }
                 };
             }

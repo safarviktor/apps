@@ -18,6 +18,9 @@ namespace OsloBysykkel.DataMigration
 
         private readonly string _runId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
+        private List<StationAvailabilityAtTime> _availabilitiesToSave;
+        private List<int> _existingStationsCache = new List<int>();
+
         public async Task Execute()
         {
             var files = GetFiles().ToList();
@@ -48,23 +51,32 @@ namespace OsloBysykkel.DataMigration
         private void ArchiveFile(string file)
         {
             var fi = new FileInfo(file);
-            var newName = Path.Combine(fi.DirectoryName, "_Archive_", _runId, fi.Name);
+            var newFolder = Path.Combine(fi.DirectoryName, "_Archive_/", _runId + "/");
+            var newName = Path.Combine(newFolder, fi.Name);
             _log.Info($"Archiving file {file} as {newName}");
+
+            if (!Directory.Exists(newFolder))
+            {
+                Directory.CreateDirectory(newFolder);
+            }
+
             File.Move(file, newName);
         }
 
         private async Task SaveData(IList<StationAvailabilityAtTime> rawData)
         {
-            var currentRowIndex = 1;
+            _availabilitiesToSave = new List<StationAvailabilityAtTime>();
+
+            _log.Info($"Adding {rawData.Count} availabilities");
             foreach (var rawRow in rawData)
             {
-                _log.Info($"Saving {currentRowIndex} of {rawData.Count} rows");
-                await SaveAvailabilityRow(rawRow);
-                currentRowIndex++;
+                await AddAvailabilityRow(rawRow);
             }
+
+            await _stationAvailabilitiesRepository.AddStationAvailabilities(_availabilitiesToSave);
         }
 
-        private async Task SaveAvailabilityRow(StationAvailabilityAtTime rawRow)
+        private async Task AddAvailabilityRow(StationAvailabilityAtTime rawRow)
         {
             if (await StationDoesNotExist(rawRow))
             {
@@ -72,19 +84,32 @@ namespace OsloBysykkel.DataMigration
                 await CreateStation(rawRow);
             }
 
-            _log.Info($"Adding availability at {rawRow.Time} for station {rawRow.Station.Id}");
-            await _stationAvailabilitiesRepository.AddStationAvailability(rawRow);
+            _availabilitiesToSave.Add(rawRow);
         }
 
         private async Task CreateStation(StationAvailabilityAtTime rawRow)
         {
             var fullStation = await _stationsRepository.AddStation(rawRow.Station);
+            _existingStationsCache.Add(rawRow.Station.Id);
         }
 
         private async Task<bool> StationDoesNotExist(StationAvailabilityAtTime rawRow)
         {
             _log.Info($"Checking if station {rawRow.Station.Id} exists");
-            return !await _stationsRepository.StationExists(rawRow.Station.Id);
+
+            if (_existingStationsCache.Contains(rawRow.Station.Id))
+            {
+                return false;
+            }
+
+            var stationExists = await _stationsRepository.StationExists(rawRow.Station.Id);
+
+            if (stationExists)
+            {
+                _existingStationsCache.Add(rawRow.Station.Id);
+            }
+
+            return !stationExists;
         }
 
         private static IEnumerable<string> GetFiles()
