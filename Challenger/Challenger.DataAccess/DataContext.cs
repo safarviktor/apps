@@ -37,7 +37,7 @@ namespace Challenger.DataAccess
             var newModel = new ChallengeSetModel()
             {
                 ChallengeId = model.ChallengeId,
-                Count = model.Count,
+                Repetitions = model.Count,
                 DateTimeCreated = DateTime.Now,
                 Date = model.Date == new DateTime() ? DateTime.Now.Date : model.Date.Date,
                 Id = nextId
@@ -72,10 +72,10 @@ namespace Challenger.DataAccess
                 Id = c.Id,
                 UserId = c.UserId,
                 Name = c.Name,
-                CurrentTotal = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Count) ?? 0,
+                CurrentTotal = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Repetitions) ?? 0,
                 LastEntry = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.DateTimeCreated ?? null,
-                LastEntryCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Count ?? 0,
-                TodayCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date.Date == today)?.Sum(x => x.Count) ?? 0,
+                LastEntryCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Repetitions ?? 0,
+                TodayCount = Database.Instance.ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date.Date == today)?.Sum(x => x.Repetitions) ?? 0,
                 Type = c.Type
             }).ToList();
 
@@ -97,7 +97,7 @@ namespace Challenger.DataAccess
 
             var model = new ChallengeDetailModel()
             {
-                CurrentTotal = sets.Sum(x => x.Count),
+                CurrentTotal = sets.Sum(x => x.Repetitions),
                 Id = id,
                 UserId = challenge.UserId,
                 Name = challenge.Name,
@@ -110,15 +110,15 @@ namespace Challenger.DataAccess
                             Sets = g.Select(s => new ChallengeSetModel()
                             {
                                 Date = s.Date,
-                                Count = s.Count,
+                                Repetitions = s.Repetitions,
                                 DateTimeCreated = s.DateTimeCreated,
                                 Id = s.Id,
                                 ChallengeId = id
                             }).ToList()
                         }).ToList(),
-                LastEntryCount = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Count ?? 0,
+                LastEntryCount = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Repetitions ?? 0,
                 LastEntry = sets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.DateTimeCreated,
-                TodayCount = sets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Count) ?? 0,
+                TodayCount = sets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Repetitions) ?? 0,
             };
 
             model.UpdateCalculatedFields();

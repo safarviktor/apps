@@ -51,15 +51,15 @@ namespace Challenger.DataAccess
                 c.SetsByDay.ForEach(thisSet =>
                 {
                     thisSet.Target = thisSet.Date.DayOfYear;
-                    thisSet.RunningTotal = c.SetsByDay.Where(s => s.Date <= thisSet.Date).SelectMany(s => s.Sets).Sum(s => s.Count);
+                    thisSet.RunningTotal = c.SetsByDay.Where(s => s.Date <= thisSet.Date).SelectMany(s => s.Sets).Sum(s => s.Repetitions);
                     thisSet.RunningTotalTarget = GetSumFromBeginningOfTheYear(thisSet.Date);
                 });
             }
 
             var allChallengeSets = c.SetsByDay.SelectMany(x => x.Sets).ToList();
-            c.LastEntryCount = allChallengeSets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Count ?? 0;
+            c.LastEntryCount = allChallengeSets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.Repetitions ?? 0;
             c.LastEntry = allChallengeSets.OrderByDescending(x => x.DateTimeCreated).FirstOrDefault()?.DateTimeCreated;
-            c.TodayCount = allChallengeSets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Count) ?? 0;
+            c.TodayCount = allChallengeSets.Where(x => x.Date.Date == DateTime.Today.Date)?.Sum(x => x.Repetitions) ?? 0;
         }
 
         private static Dictionary<DateTime, int> GetTargetsByDay()

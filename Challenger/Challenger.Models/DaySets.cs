@@ -12,7 +12,7 @@ namespace Challenger.Models
 
         public int Target { get; set; }
 
-        public int Total => Sets.Sum(x => x.Count);
+        public int Total => Sets.Sum(x => x.Repetitions);
 
         public int RunningTotalTarget { get; set; }
         public int RunningTotal { get; set; }

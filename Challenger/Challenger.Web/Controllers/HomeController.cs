@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Challenger.DataAccess;
+﻿using Challenger.DataAccess;
 using Challenger.Models;
 using Challenger.Web.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Challenger.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DataContext _dataContext = new DataContext();
+        private readonly ChallengerRepository _dataContext = new ChallengerRepository();
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var challengeOverviews = _dataContext.GetChallengeOverviews();
+            var challengeOverviews = await _dataContext.GetChallengeOverviews(1);
             return View(new HomeViewModel() { Challenges = challengeOverviews, Name = "Vik" });
         }
 
-        public ActionResult Challenge(int id)
+        public async Task<ActionResult> Challenge(int id)
         {
-            var model = _dataContext.GetChallengeDetails(id);
+            var model = await _dataContext.GetChallengeDetails(id);
             return View(new ChallengeViewModel()
             {
                 Name = model.Name,
@@ -36,7 +35,7 @@ namespace Challenger.Web.Controllers
                 AddSetViewModel = new AddSetViewModel()
                 {
                     ChallengeId = id,
-                    Count = 10,
+                    Count = 30,
                     Date = DateTime.Now
                 },
                 SetsByDate = model.SetsByDay.Select(x => new SetByDateViewModel()
@@ -44,16 +43,16 @@ namespace Challenger.Web.Controllers
                     Date = x.Date,
                     Sets = x.Sets.Select(s => new SetViewModel()
                     {
-                        Count = s.Count,
+                        Count = s.Repetitions,
                         Date = s.Date
                     }).ToList()
                 }).ToList()
             });
         }
 
-        public ActionResult AddSet(AddSetViewModel model)
+        public async Task<ActionResult> AddSet(AddSetViewModel model)
         {
-            var set = _dataContext.AddNewSet(new TrackSetModel()
+            var set = await _dataContext.AddNewSet(new TrackSetModel()
             {
                 ChallengeId = model.ChallengeId,
                 Count = model.Count,

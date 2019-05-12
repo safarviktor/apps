@@ -1,119 +1,86 @@
 ﻿@model Challenger.Web.Models.ChallengeViewModel
 
-<h3>
+<h4>
     @Model.Name
-</h3>
+</h4>
 
-<div class="row">
-    <div class="col-xs-6">
-        Done By Today
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            Done Today
+        </div>
+        <div class="col-6">
+            @Model.TodayCount
+        </div>
     </div>
-    <div class="col-xs-6">
-        @Model.CurrentTotal
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-6">
-        Done Today
+    <div class="row">
+        <div class="col-6">
+            Today's Goal
+        </div>
+        <div class="col-6">
+            @Model.TodayGoal
+        </div>
     </div>
-    <div class="col-xs-6">
-        @Model.TodayCount
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-6">
-        Today's Goal
+    <div class="row">
+        <div class="col-6">
+            Left To Do Today
+        </div>
+        <div class="col-6">
+            @Model.TodayTodo
+        </div>
     </div>
-    <div class="col-xs-6">
-        @Model.TodayGoal
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-6">
-        Left To Do Today
-    </div>
-    <div class="col-xs-6">
-        @Model.TodayTodo
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-xs-6">
-        Last Entry
-    </div>
-    <div class="col-xs-6">
-        @Model.LastEntry.ToString("yyyy-MM-dd HH:mm")
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-6">
-        Last Entry Count
-    </div>
-    <div class="col-xs-6">
-        @Model.LastEntryCount
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-6">
-        Should have done by today
-    </div>
-    <div class="col-xs-6">
-        @Model.TargetTotal
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-6">
-        Must do to catch up
-    </div>
-    <div class="col-xs-6">
-        @Model.TargetTotalTodo
+    <div class="row">
+        <div class="col-6">
+            Done By Today
+        </div>
+        <div class="col-6">
+            @Model.CurrentTotal
+        </div>
     </div>
 </div>
 
 <hr />
 
-<h4>Add set</h4>
+<h5>Add set</h5>
 
 @Html.Partial("_addSet", @Model.AddSetViewModel)
 
 <hr />
 
-<h4>
+<h5>
     Sets:
-</h4>
+</h5>
 
 <br />
 
-@foreach (var set in @Model.SetsByDate)
-{
-    <div class="row">
-        <div class="col-xs-4">
-            <b>@set.Date.ToString("dd.MM.yyyy")</b>
-        </div> 
-        <div class="col-xs-8">
-            <b>@set.Total</b>
+<div class="container">
+    @foreach (var set in @Model.SetsByDate)
+    {
+        <div class="row">
+            <div class="col-4">
+                <b>@set.Date.ToString("dd.MM.yyyy")</b>
+            </div>
+            <div class="col-8">
+                <b>@set.Total</b>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-4">
-            <small>Sets on the day:</small>
+        <div class="row">
+            <div class="col-4">
+                <small>Sets on the day:</small>
+            </div>
+            <div class="col-8">
+                @foreach (var actualSet in set.Sets)
+                {
+                    <small>@actualSet.Count</small>
+                    <br />
+                }
+            </div>
         </div>
-        <div class="col-xs-8">
-            @foreach (var actualSet in set.Sets)
-            {
-                <small>@actualSet.Count</small>
-                <br />
-            }
-        </div>
-    </div>
 
-    <hr />
-}
+        <hr />
+    }
+</div>

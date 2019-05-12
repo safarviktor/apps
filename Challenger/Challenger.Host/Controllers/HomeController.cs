@@ -44,7 +44,7 @@ namespace Challenger.Controllers
         //        _dataContext.AddNewSet(new TrackSetModel()
         //        {
         //            ChallengeId = challengeId,
-        //            Count = Convert.ToInt32(collection[nameof(TrackSetModel.Count)]),
+        //            Repetitions = Convert.ToInt32(collection[nameof(TrackSetModel.Repetitions)]),
         //            Date = Convert.ToDateTime(collection[nameof(TrackSetModel.Date)]).Date,
         //        });
 

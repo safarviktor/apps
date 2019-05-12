@@ -57,10 +57,10 @@ namespace Challenger.DataAccess
                     c.UserId = 1;
                 }
 
-                c.CurrentTotal = ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Count) ?? 0;
+                c.CurrentTotal = ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Repetitions) ?? 0;
                 c.LastEntry = ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.DateTimeCreated ?? null;
-                c.LastEntryCount = ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Count ?? 0;
-                c.TodayCount = ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date.Date == today)?.Sum(x => x.Count) ?? 0;
+                c.LastEntryCount = ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Repetitions ?? 0;
+                c.TodayCount = ChallengeSets.Where(set => set.ChallengeId == c.Id && set.Date.Date == today)?.Sum(x => x.Repetitions) ?? 0;
                 c.UpdateTodayGoal();
             }
         }
