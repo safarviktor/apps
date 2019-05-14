@@ -24,6 +24,18 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () { // will trigger when the document is ready
+            $('.datepicker').datepicker({
+                dateFormat: "yy-mm-dd",
+                firstDay: 1,
+                buttonImage: "~/Content/calendar.svg"
+            }); //Initialise any date pickers
+        });
+    </script>
 </body>
 </html>

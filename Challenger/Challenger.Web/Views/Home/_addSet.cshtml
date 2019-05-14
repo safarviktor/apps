@@ -12,7 +12,7 @@
                 Repetitions:
             </div>
             <div class="col-6">
-                @Html.EditorFor(m => m.Count)
+                @Html.TextBoxFor(m => m.Count, new { style = "max-width: 120px" })
             </div>
         </div>
         <div class="row">
@@ -20,8 +20,7 @@
                 Date:
             </div>
             <div class="col-6">
-                @*@Html.EditorFor(m => m.Date)*@
-                @Html.TextBoxFor(m => m.Date, new { @Value = Model.Date.ToString("yyyy-MM-dd"), @class = "datepicker" })
+                @Html.TextBoxFor(m => m.Date, new { @Value = Model.Date.ToString("yyyy-MM-dd"), @class="datepicker", style = "max-width: 120px" })
             </div>
         </div>
         <div class="row">
