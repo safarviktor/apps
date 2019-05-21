@@ -64,7 +64,9 @@ namespace Challenger.Web.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Display(Name = "User name")]
+        public string UserName { get; set; }
+
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

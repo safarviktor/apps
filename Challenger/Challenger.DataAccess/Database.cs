@@ -52,11 +52,6 @@ namespace Challenger.DataAccess
 
             foreach (var c in ChallengeOverviews)
             {
-                if (c.UserId == 0)
-                {
-                    c.UserId = 1;
-                }
-
                 c.CurrentTotal = ChallengeSets.Where(set => set.ChallengeId == c.Id)?.Sum(set => set.Repetitions) ?? 0;
                 c.LastEntry = ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.DateTimeCreated ?? null;
                 c.LastEntryCount = ChallengeSets.Where(set => set.ChallengeId == c.Id).OrderBy(x => x.DateTimeCreated).LastOrDefault()?.Repetitions ?? 0;

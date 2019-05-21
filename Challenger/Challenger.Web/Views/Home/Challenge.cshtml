@@ -1,90 +1,101 @@
-﻿@model Challenger.Web.Models.ChallengeViewModel
+﻿@using Microsoft.Ajax.Utilities
+@model Challenger.Web.Models.ChallengeViewModel
 
 @{
     ViewBag.Title = @Model.Name;
 }
 
-<div class="container">
+    <div class="container">
 
-    <h4>
-        @Model.Name
-    </h4>
+        <h4>
+            @Model.Name
+        </h4>
 
 
-    <div class="row">
-        <div class="col-6">
-            Done Today
-        </div>
-        <div class="col-6">
-            @Model.TodayCount
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            Today's Goal
-        </div>
-        <div class="col-6">
-            @Model.TodayGoal
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            Left To Do Today
-        </div>
-        <div class="col-6">
-            @Model.TodayTodo
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            Done
-            By Today
-        </div>
-        <div class="col-6">
-            @Model.CurrentTotal
-        </div>
-    </div>
-    <hr />
-
-    <h5>Add set</h5>
-
-    @Html.Partial("_addSet", @Model.AddSetViewModel)
-
-    <hr />
-
-    <h5>
-        Sets:
-    </h5>
-
-    <br />
-    @foreach (var set in @Model.SetsByDate)
-    {
         <div class="row">
             <div class="col-6">
-                <b>@set.Date.ToString("dd.MM.yyyy")</b>
+                Done Today
             </div>
             <div class="col-6">
-                <b>@set.Total</b>
+                @Model.TodayCount
             </div>
         </div>
 
         <div class="row">
             <div class="col-6">
-                <small>Sets on the day:</small>
+                Today's Goal
             </div>
             <div class="col-6">
-                @foreach (var actualSet in set.Sets)
-                {
-                    <small>@actualSet.Count</small>
-                    <br />
-                }
+                @Model.TodayGoal
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-6">
+                Left To Do Today
+            </div>
+            <div class="col-6">
+                @Model.TodayTodo
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                Done
+                By Today
+            </div>
+            <div class="col-6">
+                @Model.CurrentTotal
+            </div>
+        </div>
+        <hr />
+
+        <h5>Add set</h5>
+        
+
+        @Html.Partial("_addSet", @Model.AddSetViewModel)
 
         <hr />
-    }
 
-</div>
+        <h5>
+            Sets:
+        </h5>
+
+        <br />
+
+        @foreach (var set in @Model.SetsByDate)
+        {
+            <div class="row">
+                <div class="col-6">
+                    <b>@set.Date.ToString("dd.MM.yyyy")</b>
+                </div>
+                <div class="col-6">
+                    <b>@set.Total</b>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <small>Sets on the day:</small>
+                </div>
+                <div class="col-6">
+                    @foreach (var actualSet in set.Sets)
+                    {
+                        <div class="row">
+                            <div class="col-2">
+                                <small>@actualSet.Count</small>
+                            </div>
+                            <div class="col-2">
+                                <small>
+                                    @Html.ActionLink("Delete", "DeleteSet", "Home", new { setId = actualSet.Id, challengeId = Model.Id }, null)
+                                </small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <hr />
+        }
+
+    </div>

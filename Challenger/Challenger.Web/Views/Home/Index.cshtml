@@ -6,8 +6,8 @@
 
 
     <div class="container">
-        
-        
+
+
         <h4>@ViewBag.Title</h4>
 
         @foreach (var challenge in @Model.Challenges)
@@ -41,5 +41,10 @@
             </a>
             <hr />
         }
+
+        <h5>Add a new challenge</h5>
+
+
+        @Html.Partial("_addChallenge", @Model.NewChallenge)
 
     </div>

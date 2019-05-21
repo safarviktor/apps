@@ -169,11 +169,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddChallengeViewModel.cs" />
     <Compile Include="Models\AddSetViewModel.cs" />
     <Compile Include="Models\ChallengeViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
@@ -305,6 +307,16 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Home\_addChallenge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,6 +327,14 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Challenger.Business\Challenger.Business.csproj">
+      <Project>{fbb80fd1-f185-4bd5-9a8d-e2223f7c309d}</Project>
+      <Name>Challenger.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Challenger.Common\Challenger.Common.csproj">
+      <Project>{95912d68-c1a6-4e29-b7aa-e18cb94c7f61}</Project>
+      <Name>Challenger.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Challenger.DataAccess\Challenger.DataAccess.csproj">
       <Project>{5d668186-ac96-4f16-914b-fcaa9817952e}</Project>
       <Name>Challenger.DataAccess</Name>

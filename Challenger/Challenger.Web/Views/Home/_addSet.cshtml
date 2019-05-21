@@ -1,5 +1,13 @@
-﻿@model Challenger.Web.Models.AddSetViewModel
+﻿@using Challenger.Common
+@model Challenger.Web.Models.AddSetViewModel
 
+
+@if (Model.Message.IsNotNullOrEmpty())
+{
+    <hr />
+    <span style="color: red;">@Model.Message</span>
+    <hr />
+}
 
 @using (@Html.BeginForm("AddSet", "Home", FormMethod.Post))
 {

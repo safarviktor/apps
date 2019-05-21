@@ -6,5 +6,6 @@ namespace Challenger.Web.Models
     {
         public DateTime Date { get; set; }
         public int Count { get; set; }
+        public int Id { get; set; }
     }
 }

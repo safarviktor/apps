@@ -10,16 +10,16 @@ namespace Challenger.DataAccess
 {
     public class ChallengerRepository : BaseRepository
     {
-        public async Task<int> AddNewChallenge(string name, ChallengeType type, int userId)
+        public async Task<int> AddNewChallenge(string name, ChallengeType type, string userId)
         {
             var query = "INSERT INTO clg.Challenge " +
                         "(UserId, [Name], ChallengeTypeId) " +
-                        "SELECT @userId, @name, @type, GETDATE() " +
+                        "SELECT @userId, @name, @type " +
                         "" +
                         "SELECT SCOPE_IDENTITY()";
 
             var p = new DynamicParameters();
-            p.Add("@userId", userId, DbType.Int32);
+            p.Add("@userId", userId, DbType.String);
             p.Add("@name", name, DbType.String);
             p.Add("@type", (int)type, DbType.Int32);
 
@@ -29,7 +29,7 @@ namespace Challenger.DataAccess
             });
         }
 
-        public async Task<IEnumerable<ChallengeOverviewModel>> GetChallengeOverviews(int userId)
+        public async Task<IEnumerable<ChallengeOverviewModel>> GetChallengeOverviews(string userId)
         {
             var today = DateTime.Today.Date;
 
@@ -39,7 +39,7 @@ namespace Challenger.DataAccess
                         "WHERE UserId = @userId";
 
             var p = new DynamicParameters();
-            p.Add("@userId", userId, DbType.Int32);
+            p.Add("@userId", userId, DbType.String);
 
             var challenges = await WithConnection(async c =>
             {
@@ -98,20 +98,44 @@ namespace Challenger.DataAccess
             };
         }
 
+        public async Task<bool> DeleteSet(int setId, int challengeId)
+        {
+            const string query = "DELETE clg.[Set] " +
+                                 "WHERE Id = @setId AND ChallengeId = @challengeId";
 
-        public async Task<ChallengeDetailModel> GetChallengeDetails(int id)
+            var p = new DynamicParameters();
+            p.Add("@setId", setId, DbType.Int32);
+            p.Add("@challengeId", challengeId, DbType.Int32);
+            
+            var result = await WithConnection(async c =>
+            {
+                return await c.ExecuteAsync(sql: query, param: p);
+            });
+
+            return result == 1;
+        }
+
+
+        public async Task<ChallengeDetailModel> GetChallengeDetails(int id, string userId)
         {
             var query = "SELECT " +
                         "Id, UserId, [Name], ChallengeTypeId AS [Type] " +
                         "FROM clg.Challenge " +
-                        "WHERE ID = @id";
+                        "WHERE ID = @id " +
+                        "    AND UserId = @userId";
 
             var challenge = await WithConnection(async c =>
             {
                 var p = new DynamicParameters();
                 p.Add("Id", id, DbType.Int32);
+                p.Add("userId", userId, DbType.String);
                 return (await c.QueryAsync<ChallengeOverviewModel>(sql: query, param: p)).FirstOrDefault(); 
             });
+
+            if (challenge == null)
+            {
+                return null;
+            }
 
             query = "SELECT " +
                     "ID, ChallengeId, Repetitions, [Date], DateTimeCreated " +
@@ -153,7 +177,6 @@ namespace Challenger.DataAccess
 
             model.UpdateCalculatedFields();
 
-            // model.SetsByDay.RemoveAll(x => x.Date < DateTime.Now.Date.AddDays(-7));
             model.SetsByDay = model.SetsByDay.OrderByDescending(x => x.Date).Take(7).ToList();
 
             return model;

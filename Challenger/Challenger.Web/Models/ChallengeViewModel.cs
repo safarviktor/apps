@@ -17,5 +17,6 @@ namespace Challenger.Web.Models
         public AddSetViewModel AddSetViewModel { get; set; }
 
         public List<SetByDateViewModel> SetsByDate { get; set; }
+        public int Id { get; set; }
     }
 }

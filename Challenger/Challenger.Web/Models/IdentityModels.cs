@@ -21,7 +21,7 @@ namespace Challenger.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ChallengerDatabase", throwIfV1Schema: false)
         {
         }
 
