@@ -10,7 +10,15 @@
 
         @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })*@
 
-        <span class="nav-link">Hello @User.Identity.GetUserName()!</span>
+
+        if (ViewBag.UserSettingsSalutation == null)
+        {
+            <span class="nav-link">Hello @User.Identity.GetUserName()!</span>
+        }
+        else
+        {
+            <span class="nav-link">Hello @ViewBag.UserSettingsSalutation!</span>
+        }
 
         <span>&nbsp;</span>
 

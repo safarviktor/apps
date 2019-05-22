@@ -11,7 +11,7 @@ using Challenger.Web.Models;
 namespace Challenger.Web.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : AbstractController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

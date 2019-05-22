@@ -72,3 +72,20 @@ AS
 	DROP TABLE #datesUntilYesteday
 
 GO
+
+CREATE TABLE clg.UserSettings
+(
+	UserId NVARCHAR(128)
+		CONSTRAINT PK_UserSettings PRIMARY KEY CLUSTERED
+		CONSTRAINT FK_UserSettings_AspNetUsers FOREIGN KEY REFERENCES dbo.AspNetUsers (Id),
+	Salutation NVARCHAR(100) NULL,
+	DefaultRepetitions INT NOT NULL
+		CONSTRAINT DF_UserSettings_DefaultRepetitions DEFAULT 30
+)
+
+GO
+
+insert into clg.UserSettings
+(UserId, Salutation)
+select Id, 'Vik'
+from dbo.AspNetUsers

@@ -54,6 +54,7 @@
     <Compile Include="DaySets.cs" />
     <Compile Include="TrackSetModel.cs" />
     <Compile Include="UserModel.cs" />
+    <Compile Include="UserSettingsModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,26 +1,25 @@
 ﻿using Challenger.DataAccess;
 using Challenger.Models;
 using Challenger.Web.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Challenger.Common;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
 
 namespace Challenger.Web.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : AbstractController
     {
-        private readonly ChallengerRepository _dataContext = new ChallengerRepository();
-
+        private readonly ChallengerRepository _challengerRepository = new ChallengerRepository();
+                
         [HttpGet]
         public async Task<ActionResult> Index(AddChallengeViewModel newChallenge = null)
         {
-            var challengeOverviews = await _dataContext.GetChallengeOverviews(User.Identity.GetUserId());
+            var challengeOverviews = await _challengerRepository.GetChallengeOverviews(User.Identity.GetUserId());
             return View(new HomeViewModel()
             {
                 NewChallenge = newChallenge ?? new AddChallengeViewModel(),
@@ -32,14 +31,12 @@ namespace Challenger.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Challenge(int id, string message = "")
         {
-            var model = await _dataContext.GetChallengeDetails(id, User.Identity.GetUserId());
+            var model = await _challengerRepository.GetChallengeDetails(id, User.Identity.GetUserId());
 
             if (model == null)
             {
                 return RedirectToAction("Index");
             }
-
-            var defaultSetReps = 30;
 
             return View(new ChallengeViewModel()
             {
@@ -56,7 +53,7 @@ namespace Challenger.Web.Controllers
                 AddSetViewModel = new AddSetViewModel()
                 {
                     ChallengeId = id,
-                    Count = defaultSetReps > model.TodayTodo ? model.TodayTodo : defaultSetReps,
+                    Count = UserSettings.DefaultRepetitions > model.TodayTodo ? model.TodayTodo : UserSettings.DefaultRepetitions,
                     Date = DateTime.Now,
                     Message = message
                 },
@@ -88,7 +85,7 @@ namespace Challenger.Web.Controllers
                 return RedirectToAction("Index", model);
             }
 
-            await _dataContext.AddNewChallenge(model.Name, model.Type, User.Identity.GetUserId());
+            await _challengerRepository.AddNewChallenge(model.Name, model.Type, User.Identity.GetUserId());
 
             return RedirectToAction("Index");
         }
@@ -106,13 +103,13 @@ namespace Challenger.Web.Controllers
                 return RedirectToAction("Challenge", new { Id = model.ChallengeId, message = "Date cannot be greater than today." });
             }
 
-            var challenge = await _dataContext.GetChallengeDetails(model.ChallengeId, User.Identity.GetUserId());
+            var challenge = await _challengerRepository.GetChallengeDetails(model.ChallengeId, User.Identity.GetUserId());
             if (challenge == null)
             {
                 return Naughty();
             }
 
-            var set = await _dataContext.AddNewSet(new TrackSetModel()
+            var set = await _challengerRepository.AddNewSet(new TrackSetModel()
             {
                 ChallengeId = model.ChallengeId,
                 Count = model.Count,
@@ -125,13 +122,13 @@ namespace Challenger.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> DeleteSet(int setId, int challengeId)
         {
-            var challenge = await _dataContext.GetChallengeDetails(challengeId, User.Identity.GetUserId());
+            var challenge = await _challengerRepository.GetChallengeDetails(challengeId, User.Identity.GetUserId());
             if (challenge == null)
             {
                 return Naughty();
             }
 
-            var success = await _dataContext.DeleteSet(setId, challengeId);
+            var success = await _challengerRepository.DeleteSet(setId, challengeId);
 
             if (success)
             {

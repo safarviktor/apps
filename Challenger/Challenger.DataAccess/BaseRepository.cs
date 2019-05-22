@@ -50,5 +50,25 @@ namespace Challenger.DataAccess
                 throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
             }
         }
+
+        protected TResult WithConnectionSync<TResult>(Func<IDbConnection, TResult> getData)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_ConnectionString))
+                {
+                    connection.Open();
+                    return getData(connection);
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
+            }
+        }
     }
 }
