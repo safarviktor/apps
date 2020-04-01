@@ -1,0 +1,123 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="pics\domestic\cow\calf-2192609_1280.jpg" />
+    <None Remove="pics\domestic\cow\cow-2717648_1280.jpg" />
+    <None Remove="pics\domestic\cow\cow-277727_1280.jpg" />
+    <None Remove="pics\domestic\cow\cow.png" />
+    <None Remove="pics\domestic\cow\devon-cow-65611_1280.jpg" />
+    <None Remove="pics\domestic\cow\mad-cow-2.jpg" />
+    <None Remove="pics\domestic\dog\dog-1012713_1280.jpg" />
+    <None Remove="pics\domestic\dog\dog-4277148_1280.jpg" />
+    <None Remove="pics\domestic\dog\dog-816296_1280.jpg" />
+    <None Remove="pics\domestic\dog\husky-3380550_1280.jpg" />
+    <None Remove="pics\domestic\dog\schafer-dog-3835118_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar-1024678_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar-174931_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar-2276181_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar-2301723_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar-2955378_1280.jpg" />
+    <None Remove="pics\music\guitar\guitar.png" />
+    <None Remove="pics\music\trumpet\flugelhorn-2034648_1280.jpg" />
+    <None Remove="pics\music\trumpet\musician-759766_1280.jpg" />
+    <None Remove="pics\music\trumpet\people-2583124_1280.jpg" />
+    <None Remove="pics\music\trumpet\trumpet-player-8455_1280.jpg" />
+    <None Remove="pics\music\trumpet\trumpeter-590380_1280.jpg" />
+    <None Remove="pics\transport\airplane\296-1250118578pxaB.jpg" />
+    <None Remove="pics\transport\airplane\airplane-1389161715Cnl.jpg" />
+    <None Remove="pics\transport\airplane\plane-2181180_1280.jpg" />
+    <None Remove="pics\transport\airplane\ultralight-airplane-1467966007oJA.jpg" />
+    <None Remove="pics\transport\airplane\ultralight-airplane-1467966110aRR.jpg" />
+    <None Remove="pics\transport\ship\boat-95682_1280.jpg" />
+    <None Remove="pics\transport\ship\cruise-ship-3510467_1280.png" />
+    <None Remove="pics\transport\ship\mar-669275_1280.jpg" />
+    <None Remove="pics\transport\ship\ship.png" />
+    <None Remove="pics\transport\ship\small-boat-4356273_1280.jpg" />
+    <None Remove="pics\transport\ship\training-ship-443392_1280.jpg" />
+    <None Remove="pics\transport\tractor\965-1239272820Gvfu.jpg" />
+    <None Remove="pics\transport\tractor\farmer-on-tractor-11284565590uRnl.jpg" />
+    <None Remove="pics\transport\tractor\tractor-2967824_1280.jpg" />
+    <None Remove="pics\transport\tractor\tractor-bulldozer.jpg" />
+    <None Remove="pics\transport\tractor\tractor-loading-hay-bales.jpg" />
+    <None Remove="pics\transport\tractor\tractors-2490182_1280.png" />
+    <None Remove="pics\wild\bird\bird-2736540_1280.jpg" />
+    <None Remove="pics\wild\bird\chickadee-2958262_1280.jpg" />
+    <None Remove="pics\wild\bird\eagle-1753002_1280.jpg" />
+    <None Remove="pics\wild\bird\gull-2471414_1280.jpg" />
+    <None Remove="pics\wild\bird\wild-bird-2779737_1280.jpg" />
+    <None Remove="pics\wild\deer\animal-1526523_1280.jpg" />
+    <None Remove="pics\wild\deer\antler-1899812_1280.jpg" />
+    <None Remove="pics\wild\deer\deer-1562771_1280.jpg" />
+    <None Remove="pics\wild\deer\deer-196469_1280.jpg" />
+    <None Remove="pics\wild\deer\deer.jpg" />
+    <None Remove="pics\wild\deer\red-deer-1504431_1280.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="pics\domestic\cow\calf-2192609_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\cow\cow-2717648_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\cow\cow-277727_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\cow\cow.png" />
+    <EmbeddedResource Include="pics\domestic\cow\devon-cow-65611_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\cow\mad-cow-2.jpg" />
+    <EmbeddedResource Include="pics\domestic\dog\dog-1012713_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\dog\dog-4277148_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\dog\dog-816296_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\dog\husky-3380550_1280.jpg" />
+    <EmbeddedResource Include="pics\domestic\dog\schafer-dog-3835118_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar-1024678_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar-174931_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar-2276181_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar-2301723_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar-2955378_1280.jpg" />
+    <EmbeddedResource Include="pics\music\guitar\guitar.png" />
+    <EmbeddedResource Include="pics\music\trumpet\flugelhorn-2034648_1280.jpg" />
+    <EmbeddedResource Include="pics\music\trumpet\musician-759766_1280.jpg" />
+    <EmbeddedResource Include="pics\music\trumpet\people-2583124_1280.jpg" />
+    <EmbeddedResource Include="pics\music\trumpet\trumpet-player-8455_1280.jpg" />
+    <EmbeddedResource Include="pics\music\trumpet\trumpeter-590380_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\airplane\296-1250118578pxaB.jpg" />
+    <EmbeddedResource Include="pics\transport\airplane\airplane-1389161715Cnl.jpg" />
+    <EmbeddedResource Include="pics\transport\airplane\plane-2181180_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\airplane\ultralight-airplane-1467966007oJA.jpg" />
+    <EmbeddedResource Include="pics\transport\airplane\ultralight-airplane-1467966110aRR.jpg" />
+    <EmbeddedResource Include="pics\transport\ship\boat-95682_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\ship\cruise-ship-3510467_1280.png" />
+    <EmbeddedResource Include="pics\transport\ship\mar-669275_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\ship\ship.png" />
+    <EmbeddedResource Include="pics\transport\ship\small-boat-4356273_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\ship\training-ship-443392_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\965-1239272820Gvfu.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\farmer-on-tractor-11284565590uRnl.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\tractor-2967824_1280.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\tractor-bulldozer.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\tractor-loading-hay-bales.jpg" />
+    <EmbeddedResource Include="pics\transport\tractor\tractors-2490182_1280.png" />
+    <EmbeddedResource Include="pics\wild\bird\bird-2736540_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\bird\chickadee-2958262_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\bird\eagle-1753002_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\bird\gull-2471414_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\bird\wild-bird-2779737_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\animal-1526523_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\antler-1899812_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\deer-1562771_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\deer-196469_1280.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\deer.jpg" />
+    <EmbeddedResource Include="pics\wild\deer\red-deer-1504431_1280.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.495" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
+    <PackageReference Include="XamarinUniversity.Infrastructure" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

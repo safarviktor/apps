@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToddlerClick.Views.MainPage"
+             xmlns:extensions="clr-namespace:ToddlerClick.Extensions;assembly=ToddlerClick"
+             xmlns:data="clr-namespace:ToddlerClick.Data;assembly=ToddlerClick" xmlns:controls="clr-namespace:XamarinUniversity.Controls;assembly=XamU.Infrastructure"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <Style x:Key = "subCategoryImageButtonStyle" TargetType = "ImageButton">
+            <Setter Property = "VerticalOptions" Value = "FillAndExpand"/>
+            <Setter Property = "HorizontalOptions" Value = "FillAndExpand"/>
+            <Setter Property = "BackgroundColor" Value = "White"/>
+        </Style>
+
+        <Style x:Key = "categoryImageButtonStyle" TargetType = "ImageButton">
+            <Setter Property = "VerticalOptions" Value = "Center"/>
+            <Setter Property = "HorizontalOptions" Value = "Center"/>
+            <Setter Property = "BackgroundColor" Value = "White"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Main Menu -->
+        <Grid
+            Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <ImageButton
+                Grid.Column="0"
+                Source="{extensions:ImageResource ToddlerClick.pics.domestic.cow.cow.png}"
+                Style = "{StaticResource categoryImageButtonStyle}"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{x:Static data:CategoryTypes.Domestic}"
+                />
+
+            <ImageButton
+                Grid.Column="1"
+                Source="{extensions:ImageResource ToddlerClick.pics.transport.ship.ship.png}"
+                Style = "{StaticResource categoryImageButtonStyle}"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{x:Static data:CategoryTypes.Transport}"
+                />
+            
+            <ImageButton
+                Grid.Column="2"
+                Source="{extensions:ImageResource ToddlerClick.pics.wild.deer.deer.jpg}"
+                Style = "{StaticResource categoryImageButtonStyle}"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{x:Static data:CategoryTypes.Wild}"
+                />
+
+
+            <ImageButton
+                Grid.Column="3"
+                Source="{extensions:ImageResource ToddlerClick.pics.music.guitar.guitar.png}"
+                Style = "{StaticResource categoryImageButtonStyle}"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{x:Static data:CategoryTypes.Music}"
+                />
+
+        </Grid>
+
+        <!-- Content -->
+        <Grid
+            Grid.Row="1"
+            IsVisible="{Binding IsSubcategoryItemsControlVisible}"
+            RowSpacing="0"
+            ColumnSpacing ="0"            
+            >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ImageButton
+                Grid.Row="0"
+                Grid.Column="0"
+                Style = "{StaticResource subCategoryImageButtonStyle}"
+                Source="{Binding CategoryImages[0].ImageSource}"
+                Command="{Binding CategoryImages[0].Command}"
+                CommandParameter="{Binding CategoryImages[0].SubCategory}"
+                    />
+
+            <ImageButton
+                Grid.Row="0"
+                Grid.Column="1"
+                Style = "{StaticResource subCategoryImageButtonStyle}"
+                Source="{Binding CategoryImages[1].ImageSource}"                
+                Command="{Binding CategoryImages[1].Command}"
+                CommandParameter="{Binding CategoryImages[1].SubCategory}"
+                    />
+
+            <ImageButton
+                Grid.Row="1"
+                Grid.Column="0"
+                Style = "{StaticResource subCategoryImageButtonStyle}"
+                Source="{Binding CategoryImages[2].ImageSource}"
+                Command="{Binding CategoryImages[2].Command}"
+                CommandParameter="{Binding CategoryImages[2].SubCategory}"
+                    />
+
+            <ImageButton
+                Grid.Row="1"
+                Grid.Column="1"
+                Style = "{StaticResource subCategoryImageButtonStyle}"
+                Source="{Binding CategoryImages[3].ImageSource}"
+                Command="{Binding CategoryImages[3].Command}"
+                CommandParameter="{Binding CategoryImages[3].SubCategory}"
+                    />
+
+        </Grid>
+        
+        <!--<controls:ItemsControl 
+            Grid.Row="1"
+            ItemsSource="{Binding CategoryImages}"
+            IsVisible="{Binding IsSubcategoryItemsControlVisible}">
+            
+            <controls:ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <ImageButton
+                            Source="{Binding ImageSource}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Command="{Binding Command}"
+                            CommandParameter="{Binding SubCategory}"
+                            HeightRequest="150"
+                            />      
+                    </StackLayout>
+                </DataTemplate>
+            </controls:ItemsControl.ItemTemplate>            
+            
+        </controls:ItemsControl>-->
+
+
+        <ImageButton
+            Grid.Row="2"
+            IsVisible="{Binding IsShownImageVisible}"
+            Source="{Binding ShownImageSource}"
+            Command="{Binding ShownImageCommand}"
+            BackgroundColor="White"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"                            
+            />
+
+    </Grid>
+
+</ContentPage>
